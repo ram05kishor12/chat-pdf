@@ -1,17 +1,34 @@
-import { Button } from '@/components/ui/button'
-import Image from 'next/image'
 
-export default function Home() {
+import FileUpload from '@/components/fileupload';
+import Type from '@/components/typewriter';
+import { Button } from '@/components/ui/button'
+import { UserButton, auth } from '@clerk/nextjs';
+import Link from 'next/link';
+
+
+export default async function Home() {
+  const userId = await auth();
+  const isAuth = !!userId;
   return (
-    <div className='w-screem min-h-screen bg-gradient-to-r from-rose-100 to-teal-100' style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-      <div className='absolute top-0 left-0 w-full h-1/2 bg-gradient-to-r from-rose-100 to-teal-100'>
-       <div className='flex flex-col items-center text-center '>
-        <div className='flex items-center'>
-          <h1 className='text-4xl font-bold text-gray-900'>Chat PDF</h1>
-          </div>
-       </div>
-      
-      </div> 
+    <div className='w-screem min-h-screen bg-gradient-to-r from-rose-100 to-teal-100'>
+      <div className='flex flex-col items-center justify-center py-52 space-y-5'>
+        {isAuth ? <UserButton /> : null}
+        <h1 className='"text-4xl sm:text-5xl md:text-6xl lg:text-6xl space-y-5 font-bold'>Welcome to Chat PDF</h1>
+        <Type />
+        <p className='mt-3 text-lg text-center text-gray-600 '>A simple chat app that generates PDFs</p>
+
+        <div className='mt-6'>
+          {isAuth ? (
+            <FileUpload />
+          ):(
+              <Link href='/sign-in'>
+                <Button>Get Started</Button>
+              </Link>
+          )}
+          
+        </div>
+      </div>
+
     </div>
   )
 }
