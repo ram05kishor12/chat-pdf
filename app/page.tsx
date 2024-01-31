@@ -4,6 +4,7 @@ import Type from '@/components/typewriter';
 import { Button } from '@/components/ui/button'
 import { UserButton, auth } from '@clerk/nextjs';
 import Link from 'next/link';
+import { getstring } from './actions/getstring/route';
 
 
 export default async function Home() {
@@ -20,12 +21,18 @@ export default async function Home() {
         <div className='mt-6'>
           {isAuth ? (
             <FileUpload />
-          ):(
-              <Link href='/sign-in'>
-                <Button>Get Started</Button>
-              </Link>
+          ) : (
+            <Link href='/sign-in'>
+              <Button>Get Started</Button>
+            </Link>
           )}
-          
+          <form action={getstring}>
+
+            <Button className='ml-3' variant='outline'>
+              Learn More
+            </Button>
+          </form>
+
         </div>
       </div>
 
