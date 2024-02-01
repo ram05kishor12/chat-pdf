@@ -10,7 +10,7 @@ const index = pc.index("chat-pdf")
 const namespace = index.namespace("ns1");
 
 export async function match(){
-    //  const vectors=await getEmbeddings("courses offered in your college");
+     const vectors=await getEmbeddings("what is the size of library & its books volume?");
     // try {
     //     const result = await namespace.upsert([{ "id": "3", "values": vectors }]);
     //     console.log("done" + result);
@@ -19,11 +19,11 @@ export async function match(){
     //     console.log("error occured" + error);
     // }
     // const fetchResult = await namespace.fetch(['4']);
-    const fetchResults = await namespace.fetch(['3']);
+    //const fetchResults = await namespace.fetch(['3']);
     // console.log(fetchResult.records[3].values);
     
     const queryResponse = await namespace.query({
-        vector: fetchResults.records[3].values,
+        vector: vectors,
         topK: 3,
         includeMetadata: true,
         
@@ -36,7 +36,7 @@ export async function match(){
     const content=qualify.map((match)=>(match.metadata as Metadata));
 
    
-    // console.log(content[2].data);
-    return content[2].data;
+    console.log(content[0].data);
+    return content[0].data;
    
 }

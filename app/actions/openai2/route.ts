@@ -13,7 +13,7 @@ export async function getresponse() {
     
         const response = await openai.chat.completions.create({
             messages: [{ "role": "system", "content": content },
-            { "role": "user", "content": "what its NAAC grade?" },
+                { "role": "user", "content": "what is the size of library & its books volume?" },
           ],
             model: "gpt-3.5-turbo",
         });

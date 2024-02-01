@@ -24,7 +24,7 @@ const client = new S3Client({
 export async function getstring() {
     const command = new GetObjectCommand({
         Bucket: "chat-pdf-rk",
-        Key: "uploads/demo2.txt",
+        Key: "uploads/demo3.txt",
     });
 
     try {
@@ -39,8 +39,8 @@ export async function getstring() {
             const embedding=await getEmbeddings(str);
             console.log(embedding);
             try{
-                const result = await namespace.upsert([{ "id": "4", "values": embedding,"metadata": {data : str}}]);
-                console.log("done"+result);
+                const result = await namespace.upsert([{ "id": "5", "values": embedding,"metadata": {data : str}}]);
+                console.log("done");
             }
             catch(error){
                 console.log(  "error occured"+  error);
