@@ -9,9 +9,9 @@ import { getEmbeddings } from "../openai/route";
 import { Pinecone } from '@pinecone-database/pinecone';
 import { embeddings } from "../pinecone/constants";
 
-const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY as string})
-const index = pc.index("chat-pdf")
-const namespace=index.namespace("ns1");
+ const pc = new Pinecone({ apiKey: process.env.PINECONE_API_KEY as string})
+ const index = pc.index("chat-pdf")
+ const namespace=index.namespace("ns1");
 
 const client = new S3Client({
     region: "ap-south-1",
@@ -24,7 +24,7 @@ const client = new S3Client({
 export async function getstring() {
     const command = new GetObjectCommand({
         Bucket: "chat-pdf-rk",
-        Key: "uploads/demo.txt",
+        Key: "uploads/demo2.txt",
     });
 
     try {
@@ -36,11 +36,11 @@ export async function getstring() {
             
             const str = await response.Body?.transformToString() as string;
             console.log(str);
-            // const embedding=await getEmbeddings(str);
-            // console.log(embedding);
+            const embedding=await getEmbeddings(str);
+            console.log(embedding);
             try{
-                // const result = await namespace.upsert([{ "id": "1", "values": embedding }]);
-                // console.log("done"+result);
+                const result = await namespace.upsert([{ "id": "4", "values": embedding,"metadata": {data : str}}]);
+                console.log("done"+result);
             }
             catch(error){
                 console.log(  "error occured"+  error);

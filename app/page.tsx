@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button'
 import { UserButton, auth } from '@clerk/nextjs';
 import Link from 'next/link';
 import { getstring } from './actions/getstring/route';
+import { match } from './actions/query/route';
+import { getresponse } from './actions/openai2/route';
 
 
 export default async function Home() {
@@ -26,7 +28,7 @@ export default async function Home() {
               <Button>Get Started</Button>
             </Link>
           )}
-          <form action={getstring}>
+          <form action={getresponse}>
 
             <Button className='ml-3' variant='outline'>
               Learn More
