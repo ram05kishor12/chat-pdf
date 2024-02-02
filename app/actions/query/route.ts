@@ -10,14 +10,16 @@ const index = pc.index("chat-pdf")
 const namespace = index.namespace("ns1");
 
 export async function match(){
-     const vectors=await getEmbeddings("what is the size of library & its books volume?");
-    // try {
-    //     const result = await namespace.upsert([{ "id": "3", "values": vectors }]);
-    //     console.log("done" + result);
-    // }
-    // catch (error) {
-    //     console.log("error occured" + error);
-    // }
+    try{
+
+        const vectors = await getEmbeddings("when did krishna killed naragasura?");
+        // try {
+            //     const result = await namespace.upsert([{ "id": "3", "values": vectors }]);
+            //     console.log("done" + result);
+            // }
+            // catch (error) {
+                //     console.log("error occured" + error);
+                // }
     // const fetchResult = await namespace.fetch(['4']);
     //const fetchResults = await namespace.fetch(['3']);
     // console.log(fetchResult.records[3].values);
@@ -28,15 +30,33 @@ export async function match(){
         includeMetadata: true,
         
     })
-    // console.log(queryResponse);
-    type Metadata={
-        data:string
-    }
-    const qualify=queryResponse.matches.filter((match)=> match.score && match.score >0.7);
-    const content=qualify.map((match)=>(match.metadata as Metadata));
+    console.log(queryResponse);
+    type Metadata = {
+        data: string;
+    };
+    const qualify = queryResponse.matches.filter((match) => match.score && match.score > 0.7);
 
-   
-    console.log(content[0].data);
-    return content[0].data;
-   
+    const content = qualify.map((match) => (match.metadata as Metadata));
+
+        const dataString = content.reduce((acc, item) => {
+            if (item && item.data) {
+                return acc + item.data;
+            } else {
+                return acc;
+            }
+        }, ''); 
+
+        if(!dataString){
+            console.log("empty succeded")
+            return "invalid"
+        }
+        else{
+            return dataString;
+        }
 }
+catch(error){
+    const data="invalid"
+    console.log("passed dumb msg");
+    return data;
+   
+}}
